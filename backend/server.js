@@ -20,7 +20,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const PORT = 8082;
-
 /*
 [GET API] used in module 1 to fetch data for all cities
 The response is an [array] of cities with each having the following structure :
