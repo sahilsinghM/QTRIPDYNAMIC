@@ -4,22 +4,77 @@ import config from "../conf/index.js";
 function getCityFromURL(search) {
   // TODO: MODULE_ADVENTURES
   // 1. Extract the city id from the URL's Query Param and return it
-
+  return search.slice(6);
 }
+
 
 //Implementation of fetch call with a paramterized input based on city
 async function fetchAdventures(city) {
   // TODO: MODULE_ADVENTURES
   // 1. Fetch adventures using the Backend API and return the data
-
+  let adventureApi = config.backendEndpoint+`/adventures?city=${city}`;
+  try{
+    let adventureFetch = await fetch(adventureApi);
+    let adventureJson = await adventureFetch.json();
+    return adventureJson;  
+  }
+  catch(error){
+    return null;
+  }
 }
 
 //Implementation of DOM manipulation to add adventures for the given city from list of adventures
 function addAdventureToDOM(adventures) {
   // TODO: MODULE_ADVENTURES
   // 1. Populate the Adventure Cards and insert those details into the DOM
+  
+  console.log(adventures);
+  
+  //Updates the DOM with the cities
+  adventures.forEach((key) => {
+    addSingleAdventureToDOM(key.id, key.category, key.image, key.name,key.costPerHead,key.duration);
+  });
 
 }
+
+
+//Add single adventure to DOM
+function addSingleAdventureToDOM(id,category,image,name,costPerHead,duration) {
+  let addTo = document.querySelector("#data");
+  addTo.setAttribute("class","row justify-content-start");
+  let cardDiv = document.createElement("a");
+  cardDiv.setAttribute("id",id);
+  cardDiv.setAttribute("class","activity-card col-lg-3 col-md-6");
+  cardDiv.setAttribute("href",`detail/?adventure=${id}`);
+  let cardAdventureCategory = document.createElement("p");
+  cardAdventureCategory.setAttribute("class","category-banner");
+  cardAdventureCategory.innerHTML = name;
+  let cardImg = document.createElement("img");
+  cardImg.setAttribute("src",image);
+  let cardTextDiv = document.createElement("div");
+  cardTextDiv.setAttribute("class","row justify-content-between align-self-center");
+  let cardAdventureName = document.createElement("h6");
+  cardAdventureName.setAttribute("class"," col-6");
+  cardAdventureName.innerHTML = name;
+  let cardAdventureCost = document.createElement("h6");
+  cardAdventureCost.setAttribute("class"," col-6 text-right");
+  cardAdventureCost.innerHTML = "₹" +costPerHead;
+  let cardAdventureDurationText = document.createElement("h6");
+  cardAdventureDurationText.setAttribute("class","col-6");
+  cardAdventureDurationText.innerText = "Duration";
+  let cardAdventureDuration = document.createElement("h6");
+  cardAdventureDuration.setAttribute("class"," col-6 text-right");
+  cardAdventureDuration.innerHTML = duration+" Hours";
+  cardDiv.append(cardImg);
+  cardDiv.append(cardAdventureCategory);
+  cardTextDiv.append(cardAdventureName);  
+  cardTextDiv.append(cardAdventureCost);
+  cardTextDiv.append(cardAdventureDurationText);
+  cardTextDiv.append(cardAdventureDuration);
+  cardDiv.append(cardTextDiv);
+  addTo.append(cardDiv);
+}
+
 
 //Implementation of filtering by duration which takes in a list of adventures, the lower bound and upper bound of duration and returns a filtered list of adventures.
 function filterByDuration(list, low, high) {

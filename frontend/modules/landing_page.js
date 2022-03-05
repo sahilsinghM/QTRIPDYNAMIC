@@ -34,11 +34,9 @@ function addCityToDOM(id, city, description, image) {
   // 1. Populate the City details and insert those details into the DOM
   //select element in which to add this
   let addTo = document.querySelector("#data");
-  // let test = document.createElement("p");
-  // test.innerHTML = "test";
   let cardDiv = document.createElement("a");
   cardDiv.setAttribute("id",id);
-  cardDiv.setAttribute("href",`./adventures/?city=${id}`);
+  cardDiv.setAttribute("href",`/frontend/pages/adventures/?city=${id}`);
   let cardImg = document.createElement("img");
   cardImg.setAttribute("src",image);
   let cardTextDiv = document.createElement("div");
@@ -51,7 +49,6 @@ function addCityToDOM(id, city, description, image) {
   cardTextDiv.append(cardCityDesc);
   cardDiv.append(cardTextDiv);
   addTo.append(cardDiv);
-  // addTo.append(test);
 }
 
 export { init, fetchCities, addCityToDOM };
