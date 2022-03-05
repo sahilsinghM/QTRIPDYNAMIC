@@ -35,15 +35,20 @@ function addCityToDOM(id, city, description, image) {
   //select element in which to add this
   let addTo = document.querySelector("#data");
   let cardDiv = document.createElement("a");
+  addTo.setAttribute("class","row align-self-between")
   cardDiv.setAttribute("id",id);
   cardDiv.setAttribute("href",`/frontend/pages/adventures/?city=${id}`);
+  cardDiv.setAttribute("class","tile col-lg-3 col-md-6")
   let cardImg = document.createElement("img");
   cardImg.setAttribute("src",image);
   let cardTextDiv = document.createElement("div");
-  let cardCityName = document.createElement("h3");
+  cardTextDiv.setAttribute("class","tile-text");
+  let cardCityName = document.createElement("h5");
   cardCityName.innerHTML = city;
-  let cardCityDesc = document.createElement("h3");
+  cardCityName.setAttribute("class","text-center")
+  let cardCityDesc = document.createElement("h5");
   cardCityDesc.innerHTML = description;
+  cardCityDesc.setAttribute("class","text-center")
   cardDiv.append(cardImg);
   cardTextDiv.append(cardCityName);  
   cardTextDiv.append(cardCityDesc);
