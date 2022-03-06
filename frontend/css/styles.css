@@ -109,7 +109,6 @@ footer {
 .nav-link {
   margin-right: 36px;
 }
-
 /* activity page css */
 
 .activity-card {
@@ -135,7 +134,8 @@ footer {
   height: 100%;
   /* border-radius: 8px; */
   -webkit-transition: 0.2s all;
-  /* -webkit-filter: brightness(70%); */
+  -webkit-filter: brightness(70%);
+  z-index:2;
 }
 .activity-card img:hover {
   -webkit-filter: brightness(50%);
@@ -157,6 +157,7 @@ footer {
   cursor: pointer;
   -webkit-transition: 0.2s all;
   border-radius: 2px;
+  z-index: -1;
 }
 .activity-card-image:hover {
   -webkit-filter: brightness(50%);
@@ -204,6 +205,12 @@ footer {
   border-radius: 10px 0px 0px 10px;
   font-weight: bolder;
 }
+/* 
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+    width: 70%;
+    margin: auto;
+  } */
 
 .reserve-button {
   width: 100%;

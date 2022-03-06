@@ -86,11 +86,10 @@ function filterByDuration(list, low, high) {
     }
   })
 }
-
-//Implementation of filtering by category which takes in a list of adventures, list of categories to be filtered upon and returns a filtered list of adventures.
-function filterByCategory(list, categoryList) {
   // TODO: MODULE_FILTERS
   // 1. Filter adventures based on their Category and return filtered list
+function filterByCategory(list,categoryList){
+
   return list.filter(value=>{
     if(categoryList.includes(value.category)){
       return true;
@@ -98,13 +97,13 @@ function filterByCategory(list, categoryList) {
   })
 }
 
+
 // filters object looks like this filters = { duration: "", category: [] };
 
 //Implementation of combined filter function that covers the following cases :
 // 1. Filter by duration only
 // 2. Filter by category only
 // 3. Filter by duration and category together
-
 
 function filterFunction(list, filters) {
   // TODO: MODULE_FILTERS
@@ -146,14 +145,13 @@ function saveFiltersToLocalStorage(filters) {
 function getFiltersFromLocalStorage() {
   // TODO: MODULE_FILTERS
   // 1. Get the filters from localStorage and return String read as an object
-  // window.selectDuration = selectDuration;
-  // window.selectCategory = selectCategory;
-  // window.clearDuration = clearDuration;
-  // window.clearCategory = clearCategory;
-
-  JSON.parse(localStorage.getItem("filters"));
+try{
+  return JSON.parse(localStorage.getItem("filters"));
+}
   // Place holder for functionality to work in the Stubs
-  return null;
+  catch(error){
+    return null;
+  }
 }
 
 //Implementation of DOM manipulation to add the following filters to DOM :
