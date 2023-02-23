@@ -6,6 +6,7 @@ function getAdventureIdFromURL(search) {
   // 1. Get the Adventure Id from the URL
   // console.log(search);
   // console.log(search.slice(11));
+  
   return search.slice(11);
   // Place holder for functionality to work in the Stubs
   // return null;
@@ -35,7 +36,7 @@ function addAdventureDetailsToDOM(adventure) {
   console.log(adventure);
   document.getElementById("adventure-name").innerHTML = adventure.name;
   document.getElementById("adventure-subtitle").innerHTML = adventure.subtitle;
-  let photoGallery = document.getElementById("photo-gallery")
+  let photoGallery = document.getElementById("photo-gallery");
   for(var i = 0;i<adventure.images.length;i++){
     let imageDiv = document.createElement("div");
     let image = document.createElement("img");
@@ -108,6 +109,15 @@ for(var i = 0;i<images.length;i++){
 function conditionalRenderingOfReservationPanel(adventure) {
   // TODO: MODULE_RESERVATIONS
   // 1. If the adventure is already reserved, display the sold-out message.
+  if(adventure.available===true){
+    document.getElementById("reservation-panel-sold-out").style.display="none";
+    document.getElementById("reservation-panel-available").style.display="block";
+    document.getElementById("reservation-person-cost").innerHTML = adventure.costPerHead;
+  }
+  else if(adventure.available===false){
+    document.getElementById("reservation-panel-available").style.display="none";
+    document.getElementById("reservation-panel-sold-out").style.display="block";
+  }
 
 }
 
@@ -115,6 +125,7 @@ function conditionalRenderingOfReservationPanel(adventure) {
 function calculateReservationCostAndUpdateDOM(adventure, persons) {
   // TODO: MODULE_RESERVATIONS
   // 1. Calculate the cost based on number of persons and update the reservation-cost field
+  document.getElementById("reservation-cost").innerHTML = persons*adventure.costPerHead;
 
 }
 
@@ -122,7 +133,43 @@ function calculateReservationCostAndUpdateDOM(adventure, persons) {
 function captureFormSubmit(adventure) {
   // TODO: MODULE_RESERVATIONS
   // 1. Capture the query details and make a POST API call using fetch() to make the reservation
+  //capture query
+  let submitButton = document.getElementById("myForm");
+  //handle submit
+  //make post call
+  let reservationApi = config.backendEndpoint+`/reservations/new`;
+  try{
+    const update = {
+      title: 'A blog post by Kingsley',
+      body: 'Brilliant post on fetch API',
+      userId: 1,
+      };
+      
+      const options = {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(update),
+      };
+    let reservationFetch = await fetch(reservationApi);
+    let adventureDetailsJson = await adventureDetailsFetch.json();
+    return adventureDetailsJson;  
+  }
+  catch(error){
+    return null;
+  }
   // 2. If the reservation is successful, show an alert with "Success!" and refresh the page. If the reservation fails, just show an alert with "Failed!".
+  if(post=="successful"){
+    alert("Success!");
+    //refresh page
+  }
+  else{
+    alert("Failed!");
+  }
+  
+
+  
 }
 
 //Implementation of success banner after reservation
