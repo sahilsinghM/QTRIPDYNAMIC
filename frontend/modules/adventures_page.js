@@ -4,6 +4,8 @@ import config from "../conf/index.js";
 function getCityFromURL(search) {
   // TODO: MODULE_ADVENTURES
   // 1. Extract the city id from the URL's Query Param and return it
+  if(search===null){console.log('nothing searched')}
+  // else{console.log(search)};
   return search.slice(6);
 }
 
@@ -11,13 +13,14 @@ function getCityFromURL(search) {
 async function fetchAdventures(city) {
   // TODO: MODULE_ADVENTURES
   // 1. Fetch adventures using the Backend API and return the data
-  let adventureApi = config.backendEndpoint+`/adventures?city=${city}`;
+  let adventureApi = config.backendEndpoint+`/adventures/?city=${city}`;
   try{
     let adventureFetch = await fetch(adventureApi);
     let adventureJson = await adventureFetch.json();
     return adventureJson;  
   }
   catch(error){
+    console.log('fetching adventures failed')
     return null;
   }
 }
@@ -26,10 +29,14 @@ async function fetchAdventures(city) {
 function addAdventureToDOM(adventures) {
   // TODO: MODULE_ADVENTURES
   // 1. Populate the Adventure Cards and insert those details into the DOM
-  
-  console.log("consoling adventures before adding to dom",adventures);
+  if(adventures.length==0){
+    console.log('no adventures');
+  }
+  // console.log("consoling adventures before adding to dom",adventures);
   
   //Updates the DOM with the cities
+  let addTo = document.querySelector("#data");
+  addTo.setAttribute("class","row justify-content-start");
   adventures.forEach((key) => {
     addSingleAdventureToDOM(key.id, key.category, key.image, key.name,key.costPerHead,key.duration);
   });
@@ -40,40 +47,44 @@ function addAdventureToDOM(adventures) {
 //Add single adventure to DOM
 function addSingleAdventureToDOM(id,category,image,name,costPerHead,duration) {
   let addTo = document.querySelector("#data");
-  // addTo.innerHTML = "";
-  addTo.setAttribute("class","row justify-content-start");
-  let cardDiv = document.createElement("a");
+  let cardDiv = document.createElement("div");
+  let cardLink = document.createElement("a");
   cardDiv.setAttribute("id",id);
-  cardDiv.setAttribute("class","activity-card col-lg-3 col-md-6");
-  cardDiv.setAttribute("href",`detail/?adventure=${id}`);
+  cardLink.setAttribute("class","activity-card");
+  cardDiv.setAttribute("class","col-lg-3 col-md-6");
+  cardLink.setAttribute("href",`detail/?adventure=${id}`);
   let cardAdventureCategory = document.createElement("p");
   cardAdventureCategory.setAttribute("class","category-banner");
-  cardAdventureCategory.innerHTML = name;
+  cardAdventureCategory.innerHTML = category;
   let cardImg = document.createElement("img");
   cardImg.setAttribute("src",image);
   let cardTextDiv = document.createElement("div");
-  cardTextDiv.setAttribute("class","row justify-content-between align-self-center");
-  let cardAdventureName = document.createElement("h6");
+  cardTextDiv.setAttribute("class","row justify-content-between align-content-");
+  let cardAdventureName = document.createElement("p");
   cardAdventureName.setAttribute("class"," col-6");
   cardAdventureName.innerHTML = name;
-  let cardAdventureCost = document.createElement("h6");
+  let cardAdventureCost = document.createElement("p");
   cardAdventureCost.setAttribute("class"," col-6 text-right");
   cardAdventureCost.innerHTML = "₹" +costPerHead;
-  let cardAdventureDurationText = document.createElement("h6");
+  let cardAdventureDurationText = document.createElement("p");
   cardAdventureDurationText.setAttribute("class","col-6");
   cardAdventureDurationText.innerText = "Duration";
-  let cardAdventureDuration = document.createElement("h6");
+  let cardAdventureDuration = document.createElement("p");
   cardAdventureDuration.setAttribute("class"," col-6 text-right");
   cardAdventureDuration.innerHTML = duration+" Hours";
-  cardDiv.append(cardImg);
-  cardDiv.append(cardAdventureCategory);
+
+  cardLink.append(cardImg);
   cardTextDiv.append(cardAdventureName);  
   cardTextDiv.append(cardAdventureCost);
   cardTextDiv.append(cardAdventureDurationText);
   cardTextDiv.append(cardAdventureDuration);
-  cardDiv.append(cardTextDiv);
+  cardLink.append(cardAdventureCategory);
+  cardLink.append(cardTextDiv);
+  cardDiv.append(cardLink);
   addTo.append(cardDiv);
 }
+
+
 
 
 //Implementation of filtering by duration which takes in a list of adventures, the lower bound and upper bound of duration and returns a filtered list of adventures.

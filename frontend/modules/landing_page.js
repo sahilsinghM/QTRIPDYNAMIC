@@ -5,6 +5,7 @@ async function init() {
   //Fetches list of all cities along with their images and description
   let cities = await fetchCities();
   console.log(cities);
+  console.log('fetching cities successfull!');
   
   //Updates the DOM with the cities
   cities.forEach((key) => {
@@ -23,6 +24,7 @@ async function fetchCities() {
     return citiesJson;  
   }
   catch(error){
+    console.log('fetching cities failed!')
     return null;
   }
 }
@@ -37,7 +39,7 @@ function addCityToDOM(id, city, description, image) {
   let cardDiv = document.createElement("a");
   addTo.setAttribute("class","row align-self-between")
   cardDiv.setAttribute("id",id);
-  cardDiv.setAttribute("href",`/frontend/pages/adventures/?city=${id}`);
+  cardDiv.setAttribute("href",`./pages/adventures/?city=${id}`);
   cardDiv.setAttribute("class","tile col-lg-3 col-md-6")
   let cardImg = document.createElement("img");
   cardImg.setAttribute("src",image);
