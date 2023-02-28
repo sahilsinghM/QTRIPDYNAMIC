@@ -254,6 +254,7 @@ describe("Adventure Detail Page Tests", function () {
     expect(fetch.mock.calls[0][0]).toEqual(
       expect.stringContaining("/reservations/new")
     );
+    
     // Test if POST request was made
     expect(fetch.mock.calls[0][1].method).toEqual(
       expect.stringMatching(/POST/i)
