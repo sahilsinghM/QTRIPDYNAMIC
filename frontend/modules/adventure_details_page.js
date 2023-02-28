@@ -33,17 +33,15 @@ async function fetchAdventureDetails(adventureId) {
 function addAdventureDetailsToDOM(adventure) {
   // TODO: MODULE_ADVENTURE_DETAILS
   // 1. Add the details of the adventure to the HTML DOM
-  console.log(adventure);
+  // console.log(adventure);
   document.getElementById("adventure-name").innerHTML = adventure.name;
   document.getElementById("adventure-subtitle").innerHTML = adventure.subtitle;
   let photoGallery = document.getElementById("photo-gallery");
   for(var i = 0;i<adventure.images.length;i++){
-    let imageDiv = document.createElement("div");
     let image = document.createElement("img");
     image.setAttribute("src",adventure.images[i]);
     image.setAttribute("class","activity-card-image");
-    imageDiv.append(image);
-    photoGallery.append(imageDiv);
+    photoGallery.append(image);
   }
   document.getElementById("adventure-content").innerHTML = adventure.content;
 }
@@ -54,55 +52,42 @@ function addBootstrapPhotoGallery(images) {
   // 1. Add the bootstrap carousel to show the Adventure images
   let photoGallery = document.getElementById("photo-gallery");
   photoGallery.innerHTML = 
-  `<div class="container">
-  <br>
-  <div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
-    </ol>
-
-    <div class="carousel-inner" role="listbox">
-    </div>
-
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
+  `<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
   </div>
-</div>`
+  <div class="carousel-inner">
+    
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>`;
 
 
 
+
+let carouselInnerDiv = document.getElementsByClassName("carousel-inner")[0];
 for(var i = 0;i<images.length;i++){
-  //indicators  // <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-  let indicatorItem = document.createElement("li");
-  indicatorItem.setAttribute("data-target","#myCarousel");
-  indicatorItem.setAttribute("data-slide-to",`${i}`);
+  let imageDiv = document.createElement("div")
+  imageDiv.setAttribute("class","carousel-item")
   if(i===0){
-    indicatorItem.setAttribute("class","active");
+    imageDiv.setAttribute("class","carousel-item active");
   }
-  let carouselIndicators = document.querySelector("#myCarousel > ol") 
-  carouselIndicators.append(indicatorItem);
-
-  //images//   <div class="item active">//   <img src="img_chania.jpg" >// </div>
-  let carouselItemDiv = document.createElement("div");
-  if(i===0){
-    carouselItemDiv.setAttribute("class","carousel-item active");
-  }
-  else {
-    carouselItemDiv.setAttribute("class","carousel-item");
-  }
-  let image = document.createElement("img");
-  image.setAttribute("src",images[i]);
-  // image.setAttribute("class","activity-card-image");
-  carouselItemDiv.append(image);
-  let carouselinner = document.querySelector("#myCarousel > div")
-  carouselinner.append(carouselItemDiv);
+  let imag = document.createElement("img");
+  imag.setAttribute("src",images[i]);
+  imag.setAttribute("class","d-block w-100")
+  imageDiv.append(imag);
+  carouselInnerDiv.append(imageDiv);
 }
-
+// console.log(carouselInnerDiv);
 }
 
 //Implementation of conditional rendering of DOM based on availability
@@ -130,14 +115,14 @@ function calculateReservationCostAndUpdateDOM(adventure, persons) {
 }
 
 //Implementation of reservation form submission
-function captureFormSubmit(adventure) {
+async function captureFormSubmit(adventure) {
   // TODO: MODULE_RESERVATIONS
   // 1. Capture the query details and make a POST API call using fetch() to make the reservation
   //capture query
   let submitButton = document.getElementById("myForm");
   //handle submit
   //make post call
-  let reservationApi = config.backendEndpoint+`/reservations/new`;
+  let reservationApi = config.backendEndpoint+`/reservations`;
   try{
     const update = {
       title: 'A blog post by Kingsley',

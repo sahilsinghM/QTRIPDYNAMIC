@@ -32,7 +32,7 @@ function addAdventureToDOM(adventures) {
   if(adventures.length==0){
     console.log('no adventures');
   }
-  // console.log("consoling adventures before adding to dom",adventures);
+  // // console.log("consoling adventures before adding to dom",adventures);
   
   //Updates the DOM with the cities
   let addTo = document.querySelector("#data");
@@ -49,10 +49,10 @@ function addSingleAdventureToDOM(id,category,image,name,costPerHead,duration) {
   let addTo = document.querySelector("#data");
   let cardDiv = document.createElement("div");
   let cardLink = document.createElement("a");
-  cardDiv.setAttribute("id",id);
+  cardLink.setAttribute("id",id);
   cardLink.setAttribute("class","activity-card");
   cardDiv.setAttribute("class","col-lg-3 col-md-6");
-  cardLink.setAttribute("href",`detail/?adventure=${id}`);
+  cardLink.setAttribute("href",`./detail/?adventure=${id}`);
   let cardAdventureCategory = document.createElement("p");
   cardAdventureCategory.setAttribute("class","category-banner");
   cardAdventureCategory.innerHTML = category;

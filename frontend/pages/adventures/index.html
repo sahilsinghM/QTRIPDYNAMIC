@@ -48,7 +48,7 @@
                         <select class="form-control" name="duration" id="duration-select"
                             onchange="selectDuration(event)">
                             <option disabled selected value="">
-                                Filter by Duration (Hours)
+                                Duration (Hours)
                             </option>
                             <option value="0-2">0-2 Hours</option>
                             <option value="2-6">2-6 Hours</option>
@@ -62,7 +62,7 @@
                     <!-- Category filter (select one or many) -->
                     <div class="filter-bar-tile d-flex align-items-center">
                         <select class="form-control" id="category-select" onchange="selectCategory(event)">
-                            <option disabled selected value="">Add Category</option>
+                            <option disabled selected value="">Category</option>
                             <option value="Cycling">Cycling Routes</option>
                             <option value="Hillside">Hillside Getaways</option>
                             <option value="Beaches">Serene Beaches</option>
@@ -159,9 +159,6 @@
             document.getElementById("duration-select").selectedIndex = 0;
 
             filters["duration"] = duration 
-            // .push(category);
-            // filters["category"] = filters["category"].filter(onlyUnique);
-
 
             // generateFilterPillsAndUpdateDOM(filters);
             let filteredAdventures = filterFunction(adventures, filters);
