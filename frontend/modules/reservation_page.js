@@ -29,64 +29,33 @@ function addReservationToTable(reservations) {
   if (reservations[0] !== undefined) {
     for (let i = 0; i < Object.keys(reservations).length; i++) {
       let tRow = document.createElement("tr");
-      let tId = document.createElement("th");
-      tId.innerHTML = reservations[i].id;
-      tId.setAttribute("scope", "col");
-      tRow.append(tId);
-      let tName = document.createElement("th");
-      tName.innerHTML = reservations[i].name;
-      tName.setAttribute("scope", "col");
-      tRow.append(tName);
-      let tAd = document.createElement("th");
-      tAd.innerHTML = reservations[i].adventureName;
-      tAd.setAttribute("scope", "col");
-      tRow.append(tAd);
-      let tPerson = document.createElement("th");
-      tPerson.innerHTML = reservations[i].person;
-      tPerson.setAttribute("scope", "col");
-      tRow.append(tPerson);
-      let tDate = document.createElement("th");
-      tDate.innerHTML = new Date(reservations[i].date).toLocaleDateString(
-        "en-IN"
-      );
-      tDate.setAttribute("scope", "col");
-      tRow.append(tDate);
-      let tPrice = document.createElement("th");
-      tPrice.innerHTML = reservations[i].price;
-      tPrice.setAttribute("scope", "col");
-      tRow.append(tPrice);
-      let tTime = document.createElement("th");
-      let timeTo = new Date(reservations[i].time);
-      var hr = timeTo.getHours();
-      var min = timeTo.getMinutes();
-      if (min < 10) {
-        min = "0" + min;
-      }
-      var sec = timeTo.getSeconds();
-      var ampm = "am";
-      if (hr > 12) {
-        hr -= 12;
-        ampm = "pm";
-      }
-      tTime.innerHTML =
-        timeTo.toLocaleString("en-IN", {
-          day: "numeric",
-          month: "long",
+      tRow.innerHTML = `
+      <th scope ="row">${reservations[i].id}</th>
+      <td>${reservations[i].name}</td>
+      <td>${reservations[i].adventureName}</td>
+      <td>${reservations[i].person}</td>
+      <td>${new Date(reservations[i].date).toLocaleDateString("en-IN")}</td>
+      <td>${reservations[i].price}</td>
+      <td>${
+        new Date(reservations[i].time).toLocaleString("en-IN", {
           year: "numeric",
-        }) + ", "+ hr+":"+min+":"+sec+" "+ampm;
-      tTime.setAttribute("scope", "col");
-      tRow.append(tTime);
-      let tAction = document.createElement("button");
-      tAction.innerHTML = "View Adventure";
-      tAction.setAttribute("id", reservations[i].id);
-      tAction.setAttribute("class", "reservation-visit-table");
-      let aLink = document.createElement("a");
-      aLink.setAttribute(
-        "href",
-        `./detail/?adventure=${reservations[i].adventure}`
-      );
-      tAction.append(aLink);
-      tRow.append(tAction);
+          month: "long",
+          day: "numeric",
+        }) +
+        ", " +
+        new Date(reservations[i].time).toLocaleString("en-IN", {
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+          hour12: true,
+        })
+      }</td>
+        <td><div class = "reservation-visit-button" id = ${
+          reservations[i].id
+        }><a href ="./detail/?adventure=${
+        reservations[i].adventure
+      }">Visit Adventure</a></div></td>
+      `;
       document.getElementById("reservation-table").append(tRow);
     }
   }
