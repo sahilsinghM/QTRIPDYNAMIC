@@ -17,7 +17,7 @@ async function fetchAdventureDetails(adventureId) {
   // 1. Fetch the details of the adventure by making an API call
 
   let adventureDetailsApi =
-    config.backendEndpoint + `/adventures/detail/?adventure=${adventureId}`;
+    config.backendEndpoint + `adventures/detail/?adventure=${adventureId}`;
   try {
     let adventureDetailsFetch = await fetch(adventureDetailsApi);
     let adventureDetailsJson = await adventureDetailsFetch.json();
@@ -126,19 +126,19 @@ function captureFormSubmit(adventure) {
     //make post call
     let reservationApi = config.backendEndpoint + `/reservations/new`;
     let data;
-    try{
-    data = {
-      name: event.target[0].value,
-      date: event.target[1].value,
-      person: event.target[2].value,
-      adventure: adventure.id,
-    };}
-    catch{
+    try {
+      data = {
+        name: event.target[0].value,
+        date: event.target[1].value,
+        person: event.target[2].value,
+        adventure: adventure.id,
+      };
+    } catch {
       data = {
         name: "dummy",
         date: "dummy",
         person: "dummy",
-        adventure: adventure.id
+        adventure: adventure.id,
       };
     }
     // console.log(JSON.stringify(update));

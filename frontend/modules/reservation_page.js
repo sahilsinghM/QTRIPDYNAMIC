@@ -5,7 +5,7 @@ async function fetchReservations() {
   // TODO: MODULE_RESERVATIONS
   // 1. Fetch Reservations by invoking the REST API and return them
 
-  let reservationsApi = config.backendEndpoint + `/reservations`;
+  let reservationsApi = config.backendEndpoint + `reservations`;
   try {
     let reservationsFetch = await fetch(reservationsApi);
     let reservationsJson = await reservationsFetch.json();
@@ -52,7 +52,7 @@ function addReservationToTable(reservations) {
       }</td>
         <td><div class = "reservation-visit-button" id = ${
           reservations[i].id
-        }><a href ="./detail/?adventure=${
+        }><a href ="./../detail/?adventure=${
         reservations[i].adventure
       }">Visit Adventure</a></div></td>
       `;
